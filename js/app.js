@@ -20,6 +20,8 @@ function buscarClima(evt) {
         return;
     }
     // Consultar la API
+    consultarAPI()
+    consultarAPI2()
 }
 
 function mostrarError(mensaje) {
@@ -45,4 +47,22 @@ function mostrarError(mensaje) {
     }
 
 
+}
+
+function consultarAPI(ciudad, pais) {
+
+    const urlgeo = `https://api.openweathermap.org/geo/1.0/direct?q=${ciudad},${pais}&appid=${apiKey}`;
+
+    fetch(urlgeo)
+        .then(respuesta => respuesta.json())
+        .then(datos => consultarAPI2(datos[0].lat, datos[0].lon))
+}
+
+function consultarAPI2(lat, lon) {
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+    fetch(url)
+    .then( respuesta => respuesta.json())
+    .then(datos => console.log(datos))
 }
